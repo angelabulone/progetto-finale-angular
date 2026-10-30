@@ -1,0 +1,187 @@
+/*
+ * Stili del layout radice (AppComponent).
+ * Definisce la barra di navigazione superiore con effetto blur, l'area centrale flessibile e il footer.
+ */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+/* Header Principale */
+.main-header {
+  background-color: rgba(248, 234, 208, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1rem 0;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--bg-card-border);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Logo Brand Tipografico (a sinistra) */
+.brand-logo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: -0.03em;
+  transition: transform 0.15s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.02);
+}
+
+.logo-text {
+  font-weight: 800;
+}
+
+.logo-accent {
+  color: var(--brand-accent);
+  margin-left: 1px;
+}
+
+/* Menu di Navigazione (a destra) */
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Link Standard "Tutte le Ricette" */
+.nav-link {
+  text-decoration: none;
+  color: var(--text-primary);
+  background-color: #ede0c6;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease-in-out;
+  border: 1px solid var(--border-input);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nav-link:hover {
+  background-color: #e2d2b4;
+  color: #2b1808;
+}
+
+.nav-link.active {
+  background-color: #e2d2b4;
+  color: #2b1808;
+  border-color: #cbb48b;
+  box-shadow: inset 0 1px 2px rgba(45, 20, 10, 0.08);
+}
+
+/* Bottone Arancione Pieno "+ Nuova Ricetta" */
+.nav-link-btn {
+  background-color: var(--brand-accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(194, 94, 0, 0.25);
+}
+
+.nav-link-btn:hover {
+  background-color: var(--brand-accent-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(194, 94, 0, 0.35);
+}
+
+/* Main Content Wrapper */
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Footer in basso */
+.main-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--bg-card-border);
+  padding: 1.75rem 0;
+  background-color: rgba(243, 228, 200, 0.6);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.footer-project {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.footer-credits {
+  margin: 0;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+.footer-copyright {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Responsive per schermi piccoli */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .brand-logo {
+    font-size: 1.35rem;
+  }
+
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+}

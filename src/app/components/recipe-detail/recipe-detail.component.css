@@ -1,0 +1,416 @@
+/*
+ * Stili della pagina di dettaglio (RecipeDetailComponent).
+ * Gestisce il layout a due colonne (widget ingredienti e procedimento) e il box delle note di laboratorio.
+ */
+.recipe-detail-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Navigazione Superiore */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #ede0c6;
+  color: #4a2810;
+  border: 1px solid #dac6a3;
+}
+
+.btn-secondary:hover {
+  background-color: #e2d2b4;
+  color: #2b1808;
+}
+
+.btn-primary {
+  background-color: var(--brand-accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(194, 94, 0, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-accent-hover);
+  box-shadow: 0 4px 12px rgba(194, 94, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Header Ricetta */
+.detail-header {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bg-card-border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.hero-image-container {
+  width: 100%;
+  max-height: 380px;
+  overflow: hidden;
+  background-color: var(--bg-card-alt);
+  border-bottom: 1px solid var(--bg-card-border);
+}
+
+.hero-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+}
+
+.header-body {
+  padding: 1.75rem 2rem;
+}
+
+.header-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.category-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: var(--brand-soft-bg);
+  color: var(--brand-color);
+  border: 1px solid var(--brand-soft-border);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.nationality-tag {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.775rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+}
+
+.badge-web {
+  background-color: var(--brand-teal-soft-bg);
+  color: var(--brand-teal);
+  border: 1px solid var(--brand-teal-soft-border);
+}
+
+.badge-personal {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.recipe-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.source-link {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.source-link a {
+  color: var(--brand-teal);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.source-link a:hover {
+  color: var(--brand-teal-hover);
+}
+
+.created-at {
+  font-size: 0.825rem;
+  color: var(--text-dim);
+}
+
+/* Box Note di Laboratorio */
+.lab-notes-card {
+  background: linear-gradient(135deg, #fdf6e7 0%, #f6edd9 100%);
+  border: 1.5px solid var(--brand-amber-soft-border);
+  border-left: 6px solid var(--brand-teal);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 14px rgba(54, 125, 131, 0.08);
+}
+
+.lab-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lab-icon {
+  font-size: 1.4rem;
+}
+
+.lab-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--brand-teal);
+  letter-spacing: -0.01em;
+}
+
+.lab-content {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-style: italic;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Layout a Due Colonne */
+.recipe-main-content {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.column-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.column-card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Intestazione Ingredienti con recipe.jpg */
+.ingredients-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.ingredient-header-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1.5px solid var(--brand-teal);
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(54, 125, 131, 0.15);
+}
+
+/* Widget Stepper per il Ricalcolo delle Porzioni */
+.servings-scaler-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--brand-amber-soft-bg);
+  border: 1px solid var(--brand-amber-soft-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.widget-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #8c5b08;
+}
+
+.stepper-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #fdba74;
+}
+
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg-card-alt);
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.stepper-btn:hover:not(:disabled) {
+  background-color: var(--brand-teal);
+  color: #ffffff;
+  border-color: var(--brand-teal);
+}
+
+.stepper-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.servings-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  min-width: 28px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.servings-reference {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0 0 1.25rem 0;
+  text-align: right;
+}
+
+/* Elenco Ingredienti */
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--bg-card-alt);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border-input);
+  border-top: 1px solid #ebdcb9;
+  border-right: 1px solid #ebdcb9;
+  border-bottom: 1px solid #ebdcb9;
+  transition: all 0.15s ease-in-out;
+}
+
+.ingredient-item:hover {
+  background-color: #f7ede0;
+  border-left-color: var(--brand-teal);
+}
+
+.ingredient-amount {
+  font-weight: 800;
+  color: var(--brand-teal);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  min-width: 55px;
+}
+
+.ingredient-name {
+  color: var(--text-primary);
+  font-size: 0.925rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Istruzioni */
+.instructions-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Stati: Loading e Not Found */
+.detail-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--bg-card-border);
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #ebdcb9;
+  border-top: 4px solid var(--brand-teal);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.not-found-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .recipe-main-content {
+    grid-template-columns: 1fr;
+  }
+
+  .header-body {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .hero-img {
+    height: 240px;
+  }
+}

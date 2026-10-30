@@ -1,0 +1,97 @@
+<!--
+  Template del catalogo ricette.
+  Mostra la testata con logo Chef, la barra filtri reattiva, e la griglia ricette gestita con @for ed @empty.
+-->
+<section class="recipe-list-container">
+  <!-- Titolo della sezione con immagine Chef.jpg -->
+  <header class="list-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <img src="Chef.jpg" alt="Chef" class="page-title-chef-img" />
+        <span>Ricettario & Laboratorio di Cucina</span>
+      </h1>
+      <p class="page-subtitle">Esplora le ricette, calibra le dosi nel laboratorio interattivo e sperimenta nuove varianti culinarie.</p>
+    </div>
+  </header>
+
+  <!-- Control Flow Principale: Loading / Error / Data -->
+  @if (recipeService.isLoading()) {
+    <div class="state-container loading-state">
+      <div class="spinner"></div>
+      <p class="loading-text">Caricamento ricette in corso dal laboratorio...</p>
+    </div>
+  } @else if (recipeService.errorMessage()) {
+    <div class="state-container error-state">
+      <div class="error-icon">⚠️</div>
+      <h3 class="error-title">Impossibile caricare le ricette</h3>
+      <p class="error-description">{{ recipeService.errorMessage() }}</p>
+      <button type="button" class="btn-retry" (click)="recipeService.loadRecipes()">
+        🔄 Riprova a caricare
+      </button>
+    </div>
+  } @else {
+    <!-- Barra dei Filtri di Ricerca -->
+    <section class="filters-bar" aria-label="Filtri per le ricette">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          class="filter-input"
+          placeholder="Cerca per titolo o ingrediente (es. Farina, Sachertorte, Mascarpone)..."
+          [ngModel]="recipeService.searchQuery()"
+          (ngModelChange)="onSearchChange($event)"
+          aria-label="Cerca ricetta o ingrediente" />
+      </div>
+
+      <div class="nationality-select-wrapper">
+        <label for="nationality-filter" class="select-label">Cucina:</label>
+        <select 
+          id="nationality-filter"
+          class="filter-select"
+          [ngModel]="recipeService.selectedNationality() || 'Tutte'"
+          (ngModelChange)="onNationalityChange($event)"
+          aria-label="Filtra per cucina o nazionalità">
+          @for (nat of nationalities(); track nat) {
+            <option [value]="nat">{{ nat }}</option>
+          }
+        </select>
+      </div>
+
+      @if (recipeService.searchQuery() || recipeService.selectedNationality()) {
+        <button 
+          type="button" 
+          class="btn-reset" 
+          (click)="resetFilters()" 
+          title="Ripristina tutti i filtri">
+          ✕ Reset filtri
+        </button>
+      }
+    </section>
+
+    <!-- Contatore risultati -->
+    <div class="results-meta">
+      <span>Ricette trovate: <strong>{{ recipeService.filteredRecipes().length }}</strong></span>
+      @if (recipeService.searchQuery() || recipeService.selectedNationality()) {
+        <span class="filter-hint">(con filtri attivi)</span>
+      }
+    </div>
+
+    <!-- Griglia delle Ricette con @for ed @empty -->
+    <div class="recipes-grid">
+      @for (recipe of recipeService.filteredRecipes(); track recipe.id) {
+        <app-recipe-card 
+          [recipe]="recipe" 
+          (delete)="onDeleteRecipe($event)" />
+      } @empty {
+        <div class="empty-state">
+          <div class="empty-icon">🥣</div>
+          <h3>Nessuna ricetta trovata</h3>
+          <p>Nessuna ricetta corrisponde ai filtri di ricerca selezionati.</p>
+          <button type="button" class="btn-clear" (click)="resetFilters()">
+            Mostra tutte le ricette
+          </button>
+        </div>
+      }
+    </div>
+  }
+</section>

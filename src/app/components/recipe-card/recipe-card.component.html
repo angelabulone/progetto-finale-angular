@@ -1,0 +1,90 @@
+<!--
+  Template della card ricetta.
+  Visualizza la foto del piatto (o placeholder), badge di tipologia, anteprima note/istruzioni e pulsanti di azione.
+-->
+<article class="recipe-card">
+  <!-- 📸 Copertina Immagine con la foto del cibo (o placeholder di categoria) -->
+  <div class="card-image-wrapper">
+    @if (recipe.imageUrl && !imageError()) {
+      <img 
+        [src]="recipe.imageUrl" 
+        [alt]="recipe.title" 
+        class="recipe-img"
+        (error)="onImageError()" />
+    } @else {
+      <div class="no-image-placeholder">
+        <span class="placeholder-icon">{{ getCategoryIcon(recipe.category) }}</span>
+      </div>
+    }
+  </div>
+
+  <!-- Intestazione della Card -->
+  <header class="card-header">
+    <div class="meta-tags">
+      <span class="category-pill">{{ recipe.category }}</span>
+      <span class="nationality-tag">
+        {{ getCountryFlag(recipe.nationality) }} {{ recipe.nationality }}
+      </span>
+    </div>
+    <h3 class="card-title" [title]="recipe.title">{{ recipe.title }}</h3>
+  </header>
+
+  <!-- Corpo della Card -->
+  <div class="card-body">
+    <div class="servings-row">
+      <span class="servings-icon">🍽️</span>
+      <span class="servings-text">Porzioni base: <strong>{{ recipe.servings }}</strong></span>
+    </div>
+
+    <!-- Badge visivi per tipologia: solo Ricetta Web o Ricetta Personale -->
+    <div class="badges-container">
+      @if (recipe.sourceType === 'web') {
+        <span class="badge badge-web" title="Ricetta importata dal web">
+          🌐 Ricetta Web
+        </span>
+      } @else {
+        <span class="badge badge-personal" title="Ricetta personale">
+          👨‍🍳 Ricetta Personale
+        </span>
+      }
+    </div>
+
+    <!-- Box Anteprima sempre presente (permette equilibrio visivo tra ricette web e personali) -->
+    <div 
+      class="recipe-preview-box" 
+      [class.personal-preview]="recipe.sourceType === 'personal'"
+      [class.web-preview]="recipe.sourceType === 'web'">
+      
+      @if (recipe.customNotes) {
+        <span class="preview-box-title">Note:</span>
+        <p class="preview-box-text">"{{ recipe.customNotes }}"</p>
+      } @else if (recipe.sourceType === 'personal') {
+        <span class="preview-box-title">
+          <span class="preview-icon">👨‍🍳</span> Preparazione:
+        </span>
+        <p class="preview-box-text">"{{ recipe.instructions }}"</p>
+      } @else {
+        <span class="preview-box-title">
+          <span class="preview-icon">🌐</span> Procedimento:
+        </span>
+        <p class="preview-box-text">"{{ recipe.instructions }}"</p>
+      }
+    </div>
+  </div>
+
+  <!-- Footer con Pulsanti di Azione -->
+  <footer class="card-footer">
+    <a 
+      class="btn btn-detail" 
+      [routerLink]="['/recipe', recipe.id]">
+      📖 Vai alla ricetta
+    </a>
+    <button 
+      type="button" 
+      class="btn btn-delete" 
+      (click)="onDelete()" 
+      title="Elimina ricetta">
+      🗑️ Elimina
+    </button>
+  </footer>
+</article>

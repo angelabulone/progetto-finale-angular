@@ -1,0 +1,123 @@
+/*
+ * Foglio di stile globale dell'applicazione TastyLab.
+ * Definisce le variabili della palette cromatica (estratte da Chef.jpg e recipe.jpg), la tipografia e i reset base.
+ */
+:root {
+  /* Sfondi derivati esattamente da recipe.jpg e Chef.jpg */
+  --bg-main: #f8ead0;         /* Sfondo generale crema/pergamena di recipe.jpg (#f8ead0 / #f9ebd1) */
+  --bg-card: #fffdf9;         /* Sfondo card crema avorio chiarissimo */
+  --bg-card-alt: #f3e4c8;     /* Sfondo alternato per righe e controlli */
+  --bg-input: #fffefb;        /* Sfondo campi input */
+  
+  /* Bordi caldi armonizzati */
+  --bg-card-border: #e6d6b8;  /* Bordo sabbia/crema naturale (#e6d6b8) */
+  --border-subtle: #ebdcb9;   /* Bordo tenue */
+  --border-input: #dac6a3;    /* Bordo campi input */
+
+  /* Tipografia: dal colore contorni di Chef.jpg */
+  --text-primary: #2d140a;    /* Testo principale: Marrone Fondente/Espresso profondo */
+  --text-muted: #724c36;      /* Testo secondario: Terracotta scuro / Nocciola */
+  --text-dim: #98755e;        /* Testo ausiliario */
+
+  /* Colori Brand: Accento Rame/Terracotta di Chef.jpg (#ad6c4c / #c25e00) */
+  --brand-color: #ad6c4c;     /* Terracotta Chef.jpg */
+  --brand-hover: #803c25;
+  --brand-accent: #c25e00;    /* Arancione caldo TastyLab */
+  --brand-accent-hover: #9e4b00;
+  --brand-soft-bg: #faece4;
+  --brand-soft-border: #f2cbba;
+
+  /* Colore Firma Teal/Petrolio di recipe.jpg (#367d83) */
+  --brand-teal: #367d83;
+  --brand-teal-hover: #285f64;
+  --brand-teal-soft-bg: #eaf4f5;
+  --brand-teal-soft-border: #b5dcde;
+
+  /* Ocra Dorata di recipe.jpg (#c89628) */
+  --brand-amber: #c89628;
+  --brand-amber-soft-bg: #fdf6e7;
+  --brand-amber-soft-border: #f4ddaa;
+
+  /* Stati Semantici */
+  --color-success: #286b36;
+  --color-success-bg: #eaf5eb;
+  --color-success-border: #c3e6c7;
+  --color-danger: #c5221f;
+  --color-danger-bg: #fdf2f2;
+  --color-danger-border: #fca5a5;
+
+  /* Ombre */
+  --shadow-sm: 0 2px 8px rgba(45, 20, 10, 0.06);
+  --shadow-md: 0 4px 16px rgba(45, 20, 10, 0.09);
+  --shadow-lg: 0 8px 24px rgba(45, 20, 10, 0.14);
+
+  /* Raggio curvature */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, 
+body, 
+app-root {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Rende trasparenti i contenitori delle pagine per far trasparire lo sfondo */
+main, 
+.recipe-list-container, 
+.recipe-form-container, 
+.recipe-detail-container {
+  background-color: transparent !important;
+}
+
+/* Titoli in marrone scuro profondo con prevenzione overflow */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+  letter-spacing: -0.02em;
+  margin-top: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Link globale */
+a {
+  color: var(--brand-accent);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+a:hover {
+  color: var(--brand-accent-hover);
+}
+
+/* Stile scrollbar coordinato */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-input);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-teal);
+}

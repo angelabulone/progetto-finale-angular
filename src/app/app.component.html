@@ -1,0 +1,60 @@
+<!--
+  Template della shell principale di TastyLab.
+  Contiene la barra di navigazione con logo e link attivi, il <router-outlet> per le rotte e il footer istituzionale.
+-->
+<div class="app-layout">
+  <!-- Header con Navbar Principale -->
+  <header class="main-header">
+    <div class="header-inner">
+      <!-- Logo Brand Tipografico Elegante (senza chef image) -->
+      <a routerLink="/recipes" class="brand-logo" title="Torna alla Home di TastyLab">
+        <span class="logo-text">Tasty<span class="logo-accent">Lab</span></span>
+      </a>
+
+      <!-- Menu di Navigazione -->
+      <nav class="main-nav" aria-label="Navigazione principale">
+        <ul class="nav-links">
+          <li>
+            <a 
+              routerLink="/recipes" 
+              routerLinkActive="active" 
+              [routerLinkActiveOptions]="{ exact: false }"
+              class="nav-link">
+              📚 Tutte le Ricette
+            </a>
+          </li>
+          <li>
+            <a 
+              routerLink="/add" 
+              routerLinkActive="active" 
+              class="nav-link nav-link-btn">
+              + Nuova Ricetta
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Area Principale di Rendering delle Pagine Dinamiche -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer con Crediti del Progetto -->
+  <footer class="main-footer">
+    <div class="footer-inner">
+      <div class="footer-info">
+        <p class="footer-project">
+          <strong>TastyLab</strong> — Ricettario & Laboratorio di Cucina
+        </p>
+        <p class="footer-credits">
+          Progetto di sviluppo web con Angular | Architettura Standalone & Signals
+        </p>
+      </div>
+      <div class="footer-copyright">
+        &copy; {{ currentYear }} TastyLab. Tutti i diritti riservati.
+      </div>
+    </div>
+  </footer>
+</div>

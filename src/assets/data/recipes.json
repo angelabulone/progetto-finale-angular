@@ -1,0 +1,94 @@
+[
+  {
+    "id": "rec-001",
+    "title": "Tiramisù della Nonna",
+    "category": "Dolce",
+    "nationality": "Italiana",
+    "servings": 6,
+    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80",
+    "ingredients": [
+      { "name": "Savoiardi", "amount": 300, "unit": "g" },
+      { "name": "Mascarpone", "amount": 500, "unit": "g" },
+      { "name": "Uova fresche", "amount": 4, "unit": "pz" },
+      { "name": "Zucchero", "amount": 100, "unit": "g" },
+      { "name": "Caffè espresso", "amount": 300, "unit": "ml" },
+      { "name": "Cacao amaro in polvere", "amount": 20, "unit": "g" },
+      { "name": "Cacao amaro per spolverare", "amount": "q.b.", "unit": "" }
+    ],
+    "instructions": "Preparare il caffè e lasciarlo raffreddare. Separare i tuorli dagli albumi. Montare i tuorli con lo zucchero fino a ottenere un composto chiaro e spumoso, quindi incorporare il mascarpone. Montare gli albumi a neve ferma e amalgamarli delicatamente alla crema. Inzuppare velocemente i savoiardi nel caffè e disporre un primo strato in una pirofila, coprire con metà della crema e ripetere per il secondo strato. Spolverare generosamente con cacao amaro e lasciare riposare in frigorifero per almeno 4 ore.",
+    "sourceType": "personal",
+    "createdAt": "2026-09-12T10:00:00.000Z"
+  },
+  {
+    "id": "rec-002",
+    "title": "Tacos al Pastor",
+    "category": "Piatto Unico",
+    "nationality": "Messicana",
+    "servings": 4,
+    "imageUrl": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=800&q=80",
+    "ingredients": [
+      { "name": "Lonza di maiale a fettine", "amount": 600, "unit": "g" },
+      { "name": "Tortillas di mais", "amount": 8, "unit": "pz" },
+      { "name": "Ananas fresco a cubetti", "amount": 200, "unit": "g" },
+      { "name": "Cipolla bianca tritata", "amount": 1, "unit": "pz" },
+      { "name": "Pasta di achiote", "amount": 30, "unit": "g" },
+      { "name": "Succo d'arancia amara", "amount": 100, "unit": "ml" },
+      { "name": "Prezzemolo fresco tritato", "amount": 15, "unit": "g" },
+      { "name": "Peperoncino guajillo secco", "amount": 1, "unit": "pz" },
+      { "name": "Spicchi d'aglio", "amount": 2, "unit": "pz" },
+      { "name": "Lime a spicchi", "amount": 2, "unit": "pz" },
+      { "name": "Sale e pepe", "unit": "q.b." }
+    ],
+    "instructions": "Frullare achiote, succo d'arancia, aglio e peperoncino guajillo per creare la marinatura. Lasciare insaporire la carne nella marinatura per almeno 2 ore. Cuocere la carne a fiamma alta su una piastra rovente fino a doratura e tagliarla a striscioline sottili. Scaldare le tortillas, farcirle con la carne, l'ananas grigliato, la cipolla e il prezzemolo fresco. Servire con fette di lime.",
+    "sourceType": "web",
+    "sourceUrl": "https://www.culinarylab.example/mexican/tacos-al-pastor",
+    "customNotes": "Ridotto il peperoncino e sostituito coriandolo con prezzemolo fresco.",
+    "createdAt": "2026-10-02T16:45:00.000Z"
+  },
+  {
+    "id": "rec-003",
+    "title": "Ramen Veloce",
+    "category": "Piatto Unico",
+    "nationality": "Giapponese",
+    "servings": 2,
+    "imageUrl": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80",
+    "ingredients": [
+      { "name": "Noodles per ramen freschi", "amount": 200, "unit": "g" },
+      { "name": "Brodo di carne o vegetale concentrato", "amount": 800, "unit": "ml" },
+      { "name": "Salsa di soia", "amount": 30, "unit": "ml" },
+      { "name": "Olio di sesamo tostato", "amount": 10, "unit": "ml" },
+      { "name": "Zenzero fresco grattugiato", "amount": 10, "unit": "g" },
+      { "name": "Cipollotti freschi", "amount": 2, "unit": "pz" },
+      { "name": "Uova marinate (Ajitsuke Tamago)", "amount": 2, "unit": "pz" },
+      { "name": "Fogli di alga nori", "amount": 2, "unit": "pz" },
+      { "name": "Germogli di soia", "amount": 80, "unit": "g" },
+      { "name": "Semi di sesamo", "amount": "q.b.", "unit": "" }
+    ],
+    "instructions": "In una casseruola scaldare l'olio di sesamo, unire lo zenzero e versare il brodo con la salsa di soia portando a bollore leggero. In un'altra pentola cuocere i noodles al dente e scolarli. Suddividere i noodles nelle ciotole, versare il brodo caldissimo e disporre sopra i cipollotti a rondelle, i germogli, l'alga nori e l'uovo marinato tagliato a metà per il lungo.",
+    "sourceType": "web",
+    "sourceUrl": "https://www.tokyostreetfood.example/recipes/quick-ramen",
+    "customNotes": "Aggiunto uovo marinato cotto esattamente 6 minuti in salsa di soia e mirin.",
+    "createdAt": "2026-10-18T19:15:00.000Z"
+  },
+  {
+    "id": "rec-004",
+    "title": "Sachertorte Tradizionale",
+    "category": "Dolce",
+    "nationality": "Austriaca",
+    "servings": 8,
+    "imageUrl": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80",
+    "ingredients": [
+      { "name": "Cioccolato fondente", "amount": 150, "unit": "g" },
+      { "name": "Burro morbido", "amount": 130, "unit": "g" },
+      { "name": "Zucchero semolato", "amount": 150, "unit": "g" },
+      { "name": "Farina 00", "amount": 130, "unit": "g" },
+      { "name": "Uova a temperatura ambiente", "amount": 6, "unit": "pz" },
+      { "name": "Confettura di albicocche", "amount": 200, "unit": "g" },
+      { "name": "Panna montata", "amount": "q.b.", "unit": "" },
+      { "name": "Sale fino", "unit": "q.b." }
+    ],
+    "instructions": "Sciogliere il cioccolato a bagnomaria. Lavorare il burro con metà dello zucchero fino a ottenere una crema soffice, unire i tuorli uno per volta e poi il cioccolato intiepidito. Montare a neve gli albumi con lo zucchero restante e incorporarli all'impasto alternando con la farina setacciata. Cuocere in forno a 170°C per circa 50 minuti. Lasciar raffreddare, tagliare a metà orizzontalmente e farcire con confettura di albicocche tiepida. Ricoprire con glassa fondente e servire con panna montata.",
+    "sourceType": "personal",
+    "createdAt": "2026-10-25T14:30:00.000Z"
+  }
+]

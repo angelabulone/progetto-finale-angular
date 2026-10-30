@@ -1,0 +1,330 @@
+<!--
+  Template del form di creazione/modifica ricetta.
+  Include campi reattivi con feedback di errore in tempo reale e la lista ingredienti riordinabile con frecce e maniglia drag & drop.
+-->
+<div class="recipe-form-container">
+  @if (isEditMode() && recipeNotFound()) {
+    <div class="not-found-card">
+      <div class="not-found-icon">🔍</div>
+      <h2>Ricetta da modificare non trovata</h2>
+      <p>La ricetta con ID specificato non è presente nel laboratorio TastyLab o è stata eliminata.</p>
+      <a routerLink="/recipes" class="btn btn-save">Torna all'elenco delle ricette</a>
+    </div>
+  } @else {
+    <!-- Header del Form -->
+    <header class="form-header">
+      <a 
+        [routerLink]="isEditMode() && recipeId() ? ['/recipe', recipeId()] : ['/recipes']" 
+        class="btn-back">
+        ← Torna {{ isEditMode() ? 'alla Ricetta' : 'alle Ricette' }}
+      </a>
+      <h1 class="form-title">
+        @if (isEditMode()) {
+          <span>✏️ Modifica Ricetta</span>
+        } @else {
+          <img src="Chef.jpg" alt="Chef" class="form-title-chef-img" />
+          <span>Nuova Creazione</span>
+        }
+      </h1>
+      <p class="form-subtitle">
+        {{ isEditMode() 
+          ? 'Aggiorna gli ingredienti, le dosi di base, le note di laboratorio e i procedimenti culinari.' 
+          : 'Aggiungi una ricetta personale o un esperimento culinario al tuo ricettario di laboratorio.' }}
+      </p>
+    </header>
+
+    <!-- Form Reattivo -->
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="styled-form" novalidate>
+      
+      <!-- Sezione 1: Informazioni Generali (Layout a 2 Colonne) -->
+      <section class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">📋</span> Informazioni Principali
+          </h2>
+          <p class="section-desc">Definisci il nome, la tipologia e le caratteristiche generali del piatto.</p>
+        </div>
+
+        <div class="grid-2-col">
+          <!-- Titolo -->
+          <div class="form-group col-span-2">
+            <label for="title" class="form-label">Titolo Ricetta <span class="required-star">*</span></label>
+            <input 
+              type="text" 
+              id="title" 
+              formControlName="title" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('title')"
+              placeholder="Es. Sachertorte, Wiener Schnitzel, Risotto ai Funghi..." />
+            @if (isFieldInvalid('title')) {
+              <span class="error-feedback">
+                Il titolo è obbligatorio (minimo 3 caratteri).
+              </span>
+            }
+          </div>
+
+          <!-- Categoria -->
+          <div class="form-group">
+            <label for="category" class="form-label">Categoria <span class="required-star">*</span></label>
+            <select 
+              id="category" 
+              formControlName="category" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('category')">
+              @for (cat of categories; track cat) {
+                <option [value]="cat">{{ cat }}</option>
+              }
+            </select>
+            @if (isFieldInvalid('category')) {
+              <span class="error-feedback">Seleziona una categoria valida.</span>
+            }
+          </div>
+
+          <!-- Nazionalità / Cucina -->
+          <div class="form-group">
+            <label for="nationality" class="form-label">Cucina / Nazionalità <span class="required-star">*</span></label>
+            <input 
+              type="text" 
+              id="nationality" 
+              formControlName="nationality" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('nationality')"
+              placeholder="Es. Austriaca, Italiana, Messicana, Giapponese..." />
+            @if (isFieldInvalid('nationality')) {
+              <span class="error-feedback">La nazionalità o tradizione culinaria è obbligatoria.</span>
+            }
+          </div>
+
+          <!-- Porzioni di Base -->
+          <div class="form-group">
+            <label for="servings" class="form-label">Porzioni di Base <span class="required-star">*</span></label>
+            <input 
+              type="number" 
+              id="servings" 
+              formControlName="servings" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('servings')"
+              min="1" />
+            @if (isFieldInvalid('servings')) {
+              <span class="error-feedback">Inserisci un numero di porzioni valido (almeno 1).</span>
+            }
+          </div>
+
+          <!-- Origine Ricetta (sourceType) -->
+          <div class="form-group">
+            <label class="form-label">Origine Ricetta <span class="required-star">*</span></label>
+            <div class="radio-toggle-group">
+              <label class="radio-card">
+                <input 
+                  type="radio" 
+                  value="personal" 
+                  formControlName="sourceType" />
+                <span>👨‍🍳 Creazione Personale</span>
+              </label>
+              <label class="radio-card">
+                <input 
+                  type="radio" 
+                  value="web" 
+                  formControlName="sourceType" />
+                <span>🌐 Ricetta dal Web</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- URL Immagine Copertina -->
+          <div class="form-group col-span-2">
+            <label for="imageUrl" class="form-label">URL Immagine di Copertina</label>
+            <input 
+              type="url" 
+              id="imageUrl" 
+              formControlName="imageUrl" 
+              class="form-control"
+              placeholder="Es. https://images.unsplash.com/photo-1551183053-bf91a1d81141" />
+            <span class="form-hint">Facoltativo. Inserisci un link HTTPS a un'immagine per mostrare la foto del piatto.</span>
+          </div>
+        </div>
+
+        <!-- Campi Condizionali per Ricette Web: sourceUrl e customNotes -->
+        @if (recipeForm.get('sourceType')?.value === 'web') {
+          <div class="web-details-panel">
+            <div class="form-group">
+              <label for="sourceUrl" class="form-label">URL Fonte Originale <span class="required-star">*</span></label>
+              <input 
+                type="url" 
+                id="sourceUrl" 
+                formControlName="sourceUrl" 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('sourceUrl')"
+                placeholder="https://www.esempio.com/ricetta-originale" />
+              @if (isFieldInvalid('sourceUrl')) {
+                <span class="error-feedback">
+                  L'URL della fonte è obbligatorio per le ricette importate dal web.
+                </span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="customNotes" class="form-label">
+                🔬 Note di Laboratorio & Variazioni Apportate
+              </label>
+              <textarea 
+                id="customNotes" 
+                formControlName="customNotes" 
+                rows="3" 
+                class="form-control lab-notes-textarea"
+                placeholder="Annota le variazioni rispetto alla ricetta originale (es. ridotto zucchero, cottura prolungata, spezie aggiunte, trucco di cottura)..."></textarea>
+              <span class="form-hint">Queste note saranno evidenziate nel laboratorio TastyLab.</span>
+            </div>
+          </div>
+        }
+      </section>
+
+      <!-- Sezione 2: FormArray Dinamico degli Ingredienti (con riordino su/giù e drag & drop) -->
+      <section class="form-section">
+        <div class="section-header-flex">
+          <div class="section-title-wrap">
+            <h2 class="section-title">
+              <img src="recipe.jpg" alt="Icona Ricetta" class="section-icon-img" />
+              Lista Ingredienti
+            </h2>
+            <p class="section-desc">
+              Inserisci gli ingredienti. Trascina con l'icona <strong>⋮⋮</strong> o usa le frecce <strong>▲ ▼</strong> per riordinarli.
+            </p>
+          </div>
+          <button 
+            type="button" 
+            class="btn-add-ingredient" 
+            (click)="addIngredient()">
+            + Aggiungi Ingrediente
+          </button>
+        </div>
+
+        <div class="ingredients-form-container">
+          @for (ingGroup of ingredientControls; track ingGroup.get('_uid')?.value; let i = $index) {
+            <div 
+              [formGroup]="asFormGroup(ingGroup)" 
+              class="ingredient-row"
+              [class.is-dragging]="draggedIndex === i"
+              [class.is-drag-over]="dragOverIndex === i"
+              (dragover)="onDragOver($event, i)"
+              (dragleave)="onDragLeave($event, i)"
+              (drop)="onDrop($event, i)">
+
+              <!-- Maniglia per trascinare la riga (Drag & Drop) -->
+              <div 
+                class="ing-drag-handle" 
+                draggable="true" 
+                (dragstart)="onDragStart($event, i)"
+                (dragend)="onDragEnd()"
+                title="Trascina per riposizionare l'ingrediente">
+                <span class="handle-dots">⋮⋮</span>
+                <span class="handle-order-badge">{{ i + 1 }}</span>
+              </div>
+
+              <!-- Nome Ingrediente -->
+              <div class="ing-col ing-name">
+                <label class="ing-sublabel">Nome Ingrediente <span class="required-star">*</span></label>
+                <input 
+                  type="text" 
+                  formControlName="name" 
+                  placeholder="Es. Farina 00, Sale, Olio EVO..."
+                  class="form-control"
+                  [class.is-invalid]="isIngredientFieldInvalid(ingGroup, 'name')" />
+                @if (isIngredientFieldInvalid(ingGroup, 'name')) {
+                  <span class="error-feedback-inline">Nome richiesto</span>
+                }
+              </div>
+
+              <!-- Quantità (opzionale) -->
+              <div class="ing-col ing-amount">
+                <label class="ing-sublabel">Quantità (opz.)</label>
+                <input 
+                  type="text" 
+                  formControlName="amount" 
+                  placeholder="Es. 200 o q.b."
+                  class="form-control" />
+              </div>
+
+              <!-- Unità di Misura (opzionale) -->
+              <div class="ing-col ing-unit">
+                <label class="ing-sublabel">Unità (opz.)</label>
+                <input 
+                  type="text" 
+                  formControlName="unit" 
+                  placeholder="g, ml, q.b., pz..."
+                  class="form-control" />
+              </div>
+
+              <!-- Controlli di movimento e rimozione -->
+              <div class="ing-col ing-actions-wrap">
+                <div class="move-btns-group" role="group" aria-label="Sposta ingrediente">
+                  <button 
+                    type="button" 
+                    class="btn-move-ingredient" 
+                    (click)="moveIngredientUp(i)"
+                    [disabled]="i === 0"
+                    title="Sposta su">
+                    ▲
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn-move-ingredient" 
+                    (click)="moveIngredientDown(i)"
+                    [disabled]="i === ingredientControls.length - 1"
+                    title="Sposta giù">
+                    ▼
+                  </button>
+                </div>
+
+                <button 
+                  type="button" 
+                  class="btn-remove-ingredient" 
+                  (click)="removeIngredient(i)"
+                  title="Rimuovi ingrediente">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Sezione 3: Istruzioni di Preparazione -->
+      <section class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">👨‍🍳</span> Procedimento e Istruzioni <span class="required-star">*</span>
+          </h2>
+          <p class="section-desc">Descrivi i passaggi di preparazione in modo chiaro e sequenziale.</p>
+        </div>
+
+        <div class="form-group">
+          <textarea 
+            id="instructions" 
+            formControlName="instructions" 
+            rows="6" 
+            class="form-control instructions-textarea"
+            [class.is-invalid]="isFieldInvalid('instructions')"
+            placeholder="Descrivi dettagliatamente i passaggi di preparazione (es. 1. Preparare il soffritto... 2. Tostare il riso...)..."></textarea>
+          @if (isFieldInvalid('instructions')) {
+            <span class="error-feedback">
+              Le istruzioni sono obbligatorie (almeno 10 caratteri).
+            </span>
+          }
+        </div>
+      </section>
+
+      <!-- Barra Azioni di Invio -->
+      <div class="form-actions">
+        <a 
+          [routerLink]="isEditMode() && recipeId() ? ['/recipe', recipeId()] : ['/recipes']" 
+          class="btn btn-cancel">
+          Annulla
+        </a>
+        <button type="submit" class="btn btn-save" [disabled]="recipeForm.invalid">
+          {{ isEditMode() ? '💾 Salva Modifiche' : '✨ Crea Ricetta' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

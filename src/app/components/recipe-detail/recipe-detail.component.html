@@ -1,0 +1,159 @@
+<!--
+  Template della pagina di dettaglio della ricetta.
+  Presenta il riepilogo informativo, il riquadro note, il widget interattivo per scalare le porzioni e il procedimento.
+-->
+<div class="recipe-detail-container">
+  @if (recipeService.isLoading()) {
+    <div class="detail-state">
+      <div class="spinner"></div>
+      <p>Caricamento dettagli ricetta dal laboratorio...</p>
+    </div>
+  } @else if (recipe(); as currentRecipe) {
+    <!-- Barra Superiore di Navigazione -->
+    <nav class="top-nav">
+      <a routerLink="/recipes" class="btn btn-secondary">
+        ← Torna alla Lista
+      </a>
+      <a [routerLink]="['/edit', currentRecipe.id]" class="btn btn-primary">
+        ✏️ Modifica Ricetta
+      </a>
+    </nav>
+
+    <!-- Intestazione Ricetta -->
+    <header class="detail-header">
+      <!-- Immagine di Copertina con la foto del piatto (se presente) -->
+      @if (currentRecipe.imageUrl) {
+        <div class="hero-image-container">
+          <img 
+            [src]="currentRecipe.imageUrl" 
+            [alt]="currentRecipe.title" 
+            class="hero-img" />
+        </div>
+      }
+
+      <div class="header-body">
+        <div class="header-tags">
+          <span class="category-pill">{{ currentRecipe.category }}</span>
+          <span class="nationality-tag">
+            {{ getCountryFlag(currentRecipe.nationality) }} Cucina {{ currentRecipe.nationality }}
+          </span>
+          
+          @if (currentRecipe.sourceType === 'web') {
+            <span class="badge badge-web">🌐 Ricetta Web</span>
+          } @else {
+            <span class="badge badge-personal">👨‍🍳 Ricetta Personale</span>
+          }
+        </div>
+
+        <h1 class="recipe-title">{{ currentRecipe.title }}</h1>
+
+        <!-- Fonte esterna se proveniente dal web -->
+        @if (currentRecipe.sourceType === 'web' && currentRecipe.sourceUrl) {
+          <p class="source-link">
+            🔗 <strong>Fonte originale:</strong> 
+            <a [href]="currentRecipe.sourceUrl" target="_blank" rel="noopener noreferrer">
+              {{ currentRecipe.sourceUrl }}
+            </a>
+          </p>
+        }
+
+        <div class="created-at">
+          <span>📅 Inserita nel laboratorio il: {{ currentRecipe.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Box Note e Modifiche Apportate -->
+    @if (currentRecipe.customNotes) {
+      <section class="lab-notes-card" aria-label="Note">
+        <div class="lab-card-header">
+          <h2 class="lab-title">Note</h2>
+        </div>
+        <p class="lab-content">{{ currentRecipe.customNotes }}</p>
+      </section>
+    }
+
+    <!-- Sezione Centrale a Due Colonne: Ingredienti e Procedimento -->
+    <div class="recipe-main-content">
+      <!-- Colonna Sinistra: Ingredienti con Laboratorio Porzioni -->
+      <aside class="ingredients-column">
+        <div class="column-card">
+          <!-- Titolo Ingredienti con recipe.jpg al posto del carrello -->
+          <div class="ingredients-header">
+            <h2 class="ingredients-title">
+              <img src="recipe.jpg" alt="Icona Ricetta" class="ingredient-header-img" />
+              Ingredienti
+            </h2>
+          </div>
+
+          <!-- Blocco Interattivo Ricalcolo Porzioni -->
+          <div class="servings-scaler-widget">
+            <span class="widget-label">Porzioni da preparare:</span>
+            <div class="stepper-controls">
+              <button 
+                type="button" 
+                class="stepper-btn" 
+                (click)="decreaseServings()" 
+                [disabled]="targetServings() <= 1"
+                aria-label="Diminuisci porzioni">
+                −
+              </button>
+              <span class="servings-value">{{ targetServings() }}</span>
+              <button 
+                type="button" 
+                class="stepper-btn" 
+                (click)="increaseServings()"
+                aria-label="Aumenta porzioni">
+                +
+              </button>
+            </div>
+          </div>
+
+          <p class="servings-reference">
+            (Dosi base calibrate per <strong>{{ currentRecipe.servings }}</strong> {{ currentRecipe.servings === 1 ? 'persona' : 'persone' }})
+          </p>
+
+          <!-- Elenco Ingredienti Ricalcolati con PortionScalerPipe -->
+          <ul class="ingredients-list">
+            @for (ingredient of currentRecipe.ingredients; track $index) {
+              <li class="ingredient-item">
+                @let dose = (ingredient.amount | portionScaler : currentRecipe.servings : targetServings());
+                @if (dose || ingredient.unit) {
+                  <span class="ingredient-amount">
+                    @if (dose && ingredient.unit && dose !== ingredient.unit) {
+                      {{ dose }} {{ ingredient.unit }}
+                    } @else {
+                      {{ dose || ingredient.unit }}
+                    }
+                  </span>
+                } @else {
+                  <span class="ingredient-amount ingredient-qb">q.b.</span>
+                }
+                <span class="ingredient-name">{{ ingredient.name }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Colonna Destra: Istruzioni di Preparazione -->
+      <main class="instructions-column">
+        <div class="column-card">
+          <h2>👨‍🍳 Procedimento e Istruzioni</h2>
+          <div class="instructions-text">
+            {{ currentRecipe.instructions }}
+          </div>
+        </div>
+      </main>
+    </div>
+  } @else {
+    <div class="detail-state not-found-state">
+      <div class="empty-icon">🔍</div>
+      <h2>Ricetta non trovata</h2>
+      <p>La ricetta richiesta non esiste o è stata rimossa dal ricettario di TastyLab.</p>
+      <a routerLink="/recipes" class="btn btn-primary">
+        Torna alla lista delle ricette
+      </a>
+    </div>
+  }
+</div>
