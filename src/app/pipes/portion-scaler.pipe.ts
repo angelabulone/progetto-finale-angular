@@ -1,5 +1,5 @@
 /**
- * Pipe personalizzata per il "Laboratorio Porzioni" (PortionScalerPipe).
+ * Custom Pipe (PortionScalerPipe).
  * Ricalcola proporzionalmente le quantità degli ingredienti in base alle porzioni desiderate, preservando diciture come "q.b.".
  */
 import { Pipe, PipeTransform } from '@angular/core';
@@ -38,7 +38,7 @@ export class PortionScalerPipe implements PipeTransform {
       return '';
     }
 
-    // 2. Se amount è già un numero
+    // 2. Se amount è già un numero chiamamo la funzione scaleNumber e restituisce il risultato
     if (typeof amount === 'number') {
       if (isNaN(amount) || amount <= 0) {
         return '';
